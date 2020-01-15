@@ -1,0 +1,13 @@
+---
+
+#
+# This playbook is used for testing the role with TravisCI. The role name in this
+# playbook file must match the name of GitHub repository.
+#
+
+- hosts: servers_griffin_watchee
+  remote_user: root
+  roles:
+    - role: ansible-role-griffin-watchee
+  tags:
+    - role-griffin-watchee

@@ -1,0 +1,40 @@
+---
+
+- name: "Inspecting configured central Griffin"
+  setup: {}
+  delegate_to: "{{ item }}"
+  delegate_facts: True
+  with_items: "{{ groups['server_central_griffin'] }}"
+  tags:
+    - always
+
+- name: "User 'telegraf': Adding access to SSL certificates"
+  user:
+    name: telegraf
+    groups: ssl-cert
+    append: yes
+  when: '"servers_certified" in group_names'
+
+- name: Configuring local Telegraf
+  template:
+    src: "{{ item }}"
+    dest: /etc/telegraf/telegraf.conf
+    owner: root
+    group: root
+    mode: 0644
+  with_first_found:
+    - "inventory/host_files/{{ inventory_hostname }}/honzamach.griffin_watchee/telegraf.conf.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.griffin_watchee/telegraf.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.griffin_watchee/telegraf.conf.j2"
+    - "inventory/group_files/servers/honzamach.griffin_watchee/telegraf.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers/honzamach.griffin_watchee/telegraf.conf.j2"
+    - "telegraf.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "telegraf.conf.j2"
+  notify:
+    - Restart Telegraf service
+
+- name: Ensuring Telegraf service is running and enabled at system start
+  service:
+    name: telegraf
+    state: started
+    enabled: yes

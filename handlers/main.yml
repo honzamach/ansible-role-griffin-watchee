@@ -1,0 +1,11 @@
+---
+
+- name: Refresh APT cache
+  apt:
+    update_cache: yes
+
+- name: Restart Telegraf service
+  service:
+    name: telegraf
+    state: restarted
+    

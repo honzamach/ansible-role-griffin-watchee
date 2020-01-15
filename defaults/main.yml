@@ -1,0 +1,39 @@
+---
+
+#
+# Location of Telegraf Debian package with custom PostgreSQL output plugin.
+#
+hm_griffin_watchee__deb_url_telegraf: https://telegrafreleases.blob.core.windows.net/linux/telegraf_1.11.3~with~pg-1_amd64.deb
+
+#
+# List of role-related packages, that will be removed from target system.
+#
+hm_griffin_watchee__uninstall_list: []
+
+#
+# List of role-related packages, that will be installed on target system.
+#
+hm_griffin_watchee__install_list:
+  - adduser
+  - libfontconfig1
+  - software-properties-common
+
+#
+# Force APT cache update before installing any packages ('yes','no').
+#
+hm_griffin_watchee__apt_force_update: no
+
+#
+# Configurations for database for storing monitoring metrics - database name.
+#
+hm_griffin_watchee__dbname: griffin
+
+#
+# Configurations for database for storing monitoring metrics - database user.
+#
+hm_griffin_watchee__dbuser: griffin
+
+#
+# Configurations for database for storing monitoring metrics - database password.
+#
+hm_griffin_watchee__dbpswd: griffin

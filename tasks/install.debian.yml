@@ -1,0 +1,16 @@
+---
+
+- name: Uninstalling unnecessary packages
+  apt:
+    name: "{{ hm_griffin_watchee__uninstall_list }}"
+    state: absent
+
+- name: Installing necessary packages
+  apt:
+    name: "{{ hm_griffin_watchee__install_list }}"
+    state: latest
+    update_cache: "{{ hm_griffin_watchee__apt_force_update }}"
+
+- name: Installing Telegraf from remote URL
+  apt:
+    deb: "{{ hm_griffin_watchee__deb_url_telegraf }}"

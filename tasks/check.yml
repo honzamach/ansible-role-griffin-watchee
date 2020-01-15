@@ -1,0 +1,10 @@
+---
+
+- name: "ASSERTION: there are central Griffin servers to log to"
+  assert:
+    that:
+      - '"server_central_griffin" in groups'
+      - 'groups["server_central_griffin"]|length > 0'
+    msg: "There are no central Griffin servers to log to"
+  tags:
+    - check

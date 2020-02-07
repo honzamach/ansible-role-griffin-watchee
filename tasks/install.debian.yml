@@ -1,13 +1,8 @@
 ---
 
-- name: Uninstalling unnecessary packages
+- name: Installing necessary system packages
   apt:
-    name: "{{ hm_griffin_watchee__uninstall_list }}"
-    state: absent
-
-- name: Installing necessary packages
-  apt:
-    name: "{{ hm_griffin_watchee__install_list }}"
+    name: "{{ hm_griffin_watchee__install_packages[ansible_os_family|lower]['apt'] }}"
     state: latest
     update_cache: "{{ hm_griffin_watchee__apt_force_update }}"
 
